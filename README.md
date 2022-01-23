@@ -13,7 +13,7 @@ My first program by Python. Database built from *简明英汉字典增强版(660
 
 ## Usage
 
-Unzip ``db-simple.zip`` for database file.
+Unzip ``db-simple.zip`` to get database file.
 
 数据库文件压缩为``db-simple.zip``, 需要先解压.
 
