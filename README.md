@@ -17,6 +17,10 @@ Unzip ``db-simple.zip`` to get database file.
 
 数据库文件压缩为``db-simple.zip``, 需要先解压.
 
+``保存设置`` can save program position and on top status.
+
+``保存设置``可以保存程序的位置和置顶状态.
+
 
 ## Todo
 
