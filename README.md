@@ -11,6 +11,13 @@ My first program by Python. Database built from *简明英汉字典增强版(660
 我的第一个Python程序. 词典翻译数据来自互联网下载的*简明英汉字典增强版(660265条)*. 版权不明.
 
 
+## Usage
+
+Unzip ``db-simple.zip`` for database file.
+
+数据库文件压缩为``db-simple.zip``, 需要先解压.
+
+
 ## Todo
 
 - Add more database. / 增加更多数据库
