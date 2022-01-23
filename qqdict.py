@@ -76,7 +76,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.wordList.setVisible(False)
             return
         self.wordList.setVisible(True)
-        results = cursor.execute("SELECT * FROM DICT WHERE lower(WORD) LIKE '{}%' LIMIT 5".format(word.lower()))
+        first = word[0]
+        results = cursor.execute("SELECT * FROM {} WHERE lower(WORD) LIKE '{}%' LIMIT 5".format(first.upper(), word.lower()))
         words, self.means = [], []
         for t in results:
             words.append(t[0])
@@ -92,7 +93,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         word = self.wordInput.text()
         if word == '':
             return
-        result = cursor.execute("SELECT MEANING FROM DICT WHERE lower(WORD) = '{}'".format(word.lower()))
+        first = word[0]
+        result = cursor.execute("SELECT MEANING FROM {} WHERE lower(WORD) = '{}'".format(first.upper(), word.lower()))
         try:
             t = next(result)[0]
         except StopIteration:
