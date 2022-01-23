@@ -13,7 +13,8 @@ My first program by Python. Database built from *简明英汉字典增强版(660
 
 ## Screenshot
 
-![screenshot](https://github.com/zockauv/qqdict/blob/main/screenshot.png)
+
+<img src="https://github.com/zockauv/qqdict/blob/main/screenshot.png" width="200px">
 
 
 ## Usage
