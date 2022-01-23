@@ -1,7 +1,7 @@
 import sys
 import configparser
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from dictUI_v2 import *
+from dictUI import *
 import sqlite3 as sl3
 
 
@@ -11,8 +11,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
-
         self.means = []
+        self.top = 0
         self.config = configparser.ConfigParser()
         self.config.read('setup.ini')
 
@@ -24,8 +24,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.wordInput.textChanged.connect(self.lookup)
         self.wordInput.returnPressed.connect(self.mean)
         self.wordList.itemActivated['QListWidgetItem*'].connect(self.selected)
+        self.menuOnTop.triggered.connect(self.onTop)
         self.menuSave.triggered.connect(self.save)
         self.menuAbout.triggered.connect(self.about)
+    
+    def onTop(self):
+        if self.top == 0:
+            self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint|QtCore.Qt.WindowStaysOnTopHint)
+            self.top = 1
+        else:
+            self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
+            self.top = 0
+        self.show()
 
     def about(self):
         message = "秋秋词典  版本号:0.2\n\n祝秋秋小宝宝快乐长大!\n"
@@ -36,13 +46,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         y = self.config['window'].getint('posy')
         w = self.config['window'].getint('width')
         h = self.config['window'].getint('height')
+        self.top = self.config['window'].getint('top')
         self.setGeometry(QtCore.QRect(x, y, w, h))
+        self.onTop()
     
     def save(self):
         self.config['window'] = {'posx': self.geometry().x(),
                                  'posy': self.geometry().y(),
                                  'width': self.geometry().width(),
-                                 'height': self.geometry().height()}
+                                 'height': self.geometry().height(),
+                                 'top': abs(self.top-1)}
 
         with open('setup.ini', mode='w') as f:
             self.config.write(f)
