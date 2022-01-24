@@ -32,5 +32,4 @@ Unzip ``db-simple.zip`` to get database file.
 
 - Add more database. / 增加更多数据库
 - Beautify GUI. / 美化界面
-- Clear translating box when ESC pressed. / 按下ESC时清空翻译窗
 - Discriminate between upper and lower word. / 区分大小写
