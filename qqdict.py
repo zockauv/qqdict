@@ -73,11 +73,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.wordList.clear()
         word = self.wordInput.text()
         if word == '':
+            self.wordText.clear()
             self.wordList.setVisible(False)
             return
         self.wordList.setVisible(True)
-        first = word[0]
-        results = cursor.execute("SELECT * FROM {} WHERE lower(WORD) LIKE '{}%' LIMIT 5".format(first.upper(), word.lower()))
+        for i in range(len(word)):
+            if word[i].isalpha():
+                letter = word[i]
+                break
+        else:
+            return
+        results = cursor.execute("SELECT * FROM {} WHERE lower(WORD) LIKE '{}%' LIMIT 5".format(letter.upper(), word.lower()))
         words, self.means = [], []
         for t in results:
             words.append(t[0])
@@ -93,8 +99,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         word = self.wordInput.text()
         if word == '':
             return
-        first = word[0]
-        result = cursor.execute("SELECT MEANING FROM {} WHERE lower(WORD) = '{}'".format(first.upper(), word.lower()))
+        for i in range(len(word)):
+            if word[i].isalpha():
+                letter = word[i]
+                break
+        else:
+            return
+        result = cursor.execute("SELECT MEANING FROM {} WHERE lower(WORD) = '{}'".format(letter.upper(), word.lower()))
         try:
             t = next(result)[0]
         except StopIteration:
