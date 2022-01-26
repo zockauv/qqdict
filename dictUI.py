@@ -12,7 +12,7 @@ class WordInput(QtWidgets.QLineEdit):
                 self.listWidget.setCurrentRow(0)
         if event.key() == QtCore.Qt.Key_Escape:
             self.setText('')
-        if event.key() == QtCore.Qt.Key_Space:
+        if event.key() == QtCore.Qt.Key_Space and self.text() == '':
             return
         QtWidgets.QLineEdit.keyPressEvent(self, event)
 
@@ -95,10 +95,42 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "秋秋词典 Ver.0.2"))
-        self.menu.setTitle(_translate("MainWindow", "数据库"))
+        self.menu.setTitle(_translate("MainWindow", "词库"))
         self.menu_2.setTitle(_translate("MainWindow", "程序"))
-        self.menuSwitchSimple.setText(_translate("MainWindow", "简明英汉"))
+        self.menuSwitchSimple.setText(_translate("MainWindow", "简明英汉汉英"))
         self.menuSave.setText(_translate("MainWindow", "保存设置"))
         self.menuAbout.setText(_translate("MainWindow", "关于"))
         self.menuExit.setText(_translate("MainWindow", "退出"))
         self.menuOnTop.setText(_translate("MainWindow", "切换置顶"))
+
+
+class Photo_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(400, 300)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/pic/icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Form.setWindowIcon(icon)
+        self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap(":/pic/qq.jpg"))
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "刘秋逸"))
+
+
+import resource_rc

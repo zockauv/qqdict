@@ -1,7 +1,8 @@
 import sys
 import configparser
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 from dictUI import *
+from photoUI import *
 import sqlite3 as sl3
 
 
@@ -9,8 +10,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
+        self.photo = PhotoWindow()
 
-        self.setWindowIcon(QtGui.QIcon('icon.ico'))
+        self.setWindowIcon(QtGui.QIcon(':pic/icon.ico'))
         self.means = []
         self.top = 0
         self.config = configparser.ConfigParser()
@@ -27,6 +29,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.menuOnTop.triggered.connect(self.onTop)
         self.menuSave.triggered.connect(self.save)
         self.menuAbout.triggered.connect(self.about)
+        self.menuExit.triggered.connect(self.exit)
+    
+    def exit(self):
+        app.exit()
     
     def onTop(self):
         if self.top == 0:
@@ -38,8 +44,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.show()
 
     def about(self):
-        message = "秋秋词典  版本号:0.2\n\n祝秋秋小宝宝快乐长大!\n"
-        QtWidgets.QMessageBox.about(self, '关于', message)
+        # message = "秋秋词典  版本号:0.2\n\n祝秋秋小宝宝快乐长大!\n"
+        # QtWidgets.QMessageBox.about(self, '关于', message)
+        self.photo.show()
 
     def setconfig(self):
         x = self.config['window'].getint('posx')
@@ -78,6 +85,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             return
         self.wordList.setVisible(True)
         for i in range(len(word)):
+            if word[i] >= '\u4e00' and word[i] <= '\u9fa5':
+                letter = 'CN'
+                break
             if word[i].isalpha():
                 letter = word[i]
                 break
@@ -100,6 +110,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         if word == '':
             return
         for i in range(len(word)):
+            if word[i] >= '\u4e00' and word[i] <= '\u9fa5':
+                letter = 'CN'
+                break
             if word[i].isalpha():
                 letter = word[i]
                 break
@@ -126,6 +139,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.wordText.setText(meaning)
         except UnboundLocalError:
             pass
+
+class PhotoWindow(QDialog, Photo_Form):
+    def __init__(self):
+        QDialog.__init__(self)
+        self.child=Photo_Form()
+        self.setupUi(self)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
 
 conn = sl3.connect('db-simple.sqlite')
 cursor = conn.cursor()
